@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heena Hooda — Front-End Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --blue: #185FA5;
+    --blue-light: #E6F1FB;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --border: rgba(0,0,0,0.1);
+    --bg: #ffffff;
+    --bg2: #f8f8f6;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--bg); font-size: 15px; line-height: 1.7; }
+  a { text-decoration: none; color: inherit; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+  }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 20px; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 14px; color: var(--muted); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { font-size: 13px; padding: 7px 18px; background: var(--text); color: white; border-radius: 100px; transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.8; }
+
+  .hero { padding: 6rem 2.5rem 4rem; max-width: 900px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--blue); background: var(--blue-light);
+    border-radius: 100px; padding: 4px 14px; margin-bottom: 1.5rem; font-weight: 500;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(36px,6vw,60px); line-height: 1.1; letter-spacing: -1px; margin-bottom: 1.2rem; }
+  .hero h1 em { font-style: normal; color: var(--blue); }
+  .hero-sub { font-size: 17px; color: var(--muted); max-width: 520px; margin-bottom: 2rem; }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-dark { background: var(--text); color: white; padding: 11px 24px; border-radius: 100px; font-size: 14px; font-weight: 500; transition: opacity 0.2s; }
+  .btn-dark:hover { opacity: 0.8; }
+  .btn-outline { background: transparent; color: var(--text); padding: 11px 24px; border-radius: 100px; font-size: 14px; border: 0.5px solid rgba(0,0,0,0.25); transition: border-color 0.2s; }
+  .btn-outline:hover { border-color: var(--text); }
+
+  section { padding: 3rem 2.5rem; border-top: 0.5px solid var(--border); max-width: 1100px; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.8rem; }
+
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill { font-size: 13px; padding: 6px 16px; border-radius: 100px; border: 0.5px solid var(--border); color: var(--muted); background: var(--bg2); transition: border-color 0.2s, color 0.2s; }
+  .skill:hover { border-color: var(--text); color: var(--text); }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .project-card { border: 0.5px solid var(--border); border-radius: 16px; padding: 1.4rem; background: var(--bg); transition: border-color 0.2s, transform 0.2s; }
+  .project-card:hover { border-color: rgba(0,0,0,0.25); transform: translateY(-2px); }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+  .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .card-links { display: flex; gap: 6px; align-items: center; }
+  .chip { font-size: 11px; padding: 3px 10px; border-radius: 100px; border: 0.5px solid var(--border); color: var(--muted); transition: color 0.2s; }
+  .chip:hover { color: var(--text); }
+  .chip-blue { background: var(--blue-light); color: var(--blue); border-color: transparent; font-weight: 500; }
+  .card-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag { font-size: 11px; padding: 3px 10px; border-radius: 100px; background: var(--bg2); color: var(--muted); }
+
+  .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+  .tl-item { display: flex; gap: 1.2rem; }
+  .tl-left { display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 4px; }
+  .tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+  .tl-dot.gray { background: #ccc; }
+  .tl-line { width: 1px; flex: 1; background: var(--border); min-height: 30px; }
+  .tl-title { font-size: 15px; font-weight: 500; }
+  .tl-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+  .ach-list { display: flex; flex-direction: column; gap: 12px; }
+  .ach-item { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .ach-mark { width: 20px; height: 20px; border-radius: 50%; background: var(--blue-light); color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; flex-shrink: 0; margin-top: 1px; }
+
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .cert-card { border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem 1.2rem; background: var(--bg2); }
+  .cert-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .cert-by { font-size: 12px; color: var(--muted); }
+
+  .contact-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .contact-chip { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); border: 0.5px solid var(--border); padding: 9px 18px; border-radius: 100px; transition: color 0.2s, border-color 0.2s; }
+  .contact-chip:hover { color: var(--text); border-color: rgba(0,0,0,0.3); }
+
+  footer { border-top: 0.5px solid var(--border); padding: 1.5rem 2.5rem; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 3rem 1.2rem 2rem; }
+    section { padding: 2rem 1.2rem; }
+    footer { padding: 1rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Heena Hooda</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="mailto:heenahooda2@gmail.com">Hire me</a>
+</nav>
+
+<div class="hero fade-in">
+  <div class="hero-badge">Open to internships</div>
+  <h1>Hi, I'm <em>Heena Hooda</em><br>Front-End Developer</h1>
+  <p class="hero-sub">Computer Science student building responsive, user-focused web apps. Skilled in React, JavaScript & Tailwind CSS — working toward full-stack development.</p>
+  <div class="hero-btns">
+    <a class="btn-dark" href="mailto:heenahooda2@gmail.com">Get in touch</a>
+    <a class="btn-outline" href="https://github.com/heenahooda" target="_blank">View GitHub</a>
+    <a class="btn-outline" href="https://linkedin.com/in/heena-hooda-870b40323" target="_blank">LinkedIn</a>
+  </div>
+</div>
+
+<section class="fade-in">
+  <div class="section-label">Skills</div>
+  <div class="skills-wrap">
+    <span class="skill">HTML5</span>
+    <span class="skill">CSS3</span>
+    <span class="skill">JavaScript</span>
+    <span class="skill">React</span>
+    <span class="skill">Tailwind CSS</span>
+    <span class="skill">Java</span>
+    <span class="skill">Git & GitHub</span>
+    <span class="skill">Responsive Design</span>
+    <span class="skill">UI/UX</span>
+    <span class="skill">Problem Solving</span>
+  </div>
+</section>
+
+<section id="projects" class="fade-in">
+  <div class="section-label">Projects</div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-icon" style="background:#E6F1FB;">🌧️</div>
+        <div class="card-links">
+          <span class="chip chip-blue">SIH Top 50</span>
+          <a class="chip" href="https://github.com/heenahooda/rainyscape-" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="card-title">RainScape</div>
+      <div class="card-desc">Smart water-logging navigation platform with real-time alerts and route visualization. Built for Smart India Hackathon — selected Top 50 nationwide.</div>
+      <div class="tag-row">
+        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Tailwind CSS</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-icon" style="background:#EAF3DE;">🌾</div>
+        <div class="card-links">
+          <a class="chip" href="#" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="card-title">AgriSafe MRI</div>
+      <div class="card-desc">Antimicrobial monitoring platform with role-based dashboards for farmers and regulators. Coordinated with backend and blockchain teams.</div>
+      <div class="tag-row">
+        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Blockchain</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="fade-in">
+  <div class="section-label">Experience & Education</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div>
+        <div class="tl-title">Front-End Developer Intern — YHills / Edutech Pvt. Ltd.</div>
+        <div class="tl-sub">June 2025 – July 2025 · Developed responsive web interfaces using HTML, CSS, JavaScript, and Tailwind CSS.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot gray"></div></div>
+      <div>
+        <div class="tl-title">B.Tech — Computer Science & Engineering</div>
+        <div class="tl-sub">Dronacharya College of Engineering · 2023 – 2027</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fade-in">
+  <div class="section-label">Achievements</div>
+  <div class="ach-list">
+    <div class="ach-item"><div class="ach-mark">★</div>Smart India Hackathon (SIH) — Selected among Top 50 teams nationwide for developing RainScape</div>
+    <div class="ach-item"><div class="ach-mark">★</div>Research paper contribution at the 10th International Conference on ICT for Sustainable Development</div>
+  </div>
+</section>
+
+<section class="fade-in">
+  <div class="section-label">Certifications</div>
+  <div class="cert-grid">
+    <div class="cert-card"><div class="cert-name">Web Development Certificate</div><div class="cert-by">GeeksforGeeks × IIT Roorkee Technical Fest</div></div>
+    <div class="cert-card"><div class="cert-name">Oracle Certified Foundations Associate</div><div class="cert-by">AI Foundations · Oracle</div></div>
+    <div class="cert-card"><div class="cert-name">Technology Job Simulation</div><div class="cert-by">Deloitte · Virtual Experience</div></div>
+  </div>
+</section>
+
+<section id="contact" class="fade-in">
+  <div class="section-label">Contact</div>
+  <div class="contact-chips">
+    <a class="contact-chip" href="mailto:heenahooda2@gmail.com">✉ heenahooda2@gmail.com</a>
+    <a class="contact-chip" href="tel:9351284098">📞 9351284098</a>
+    <a class="contact-chip" href="https://linkedin.com/in/heena-hooda-870b40323" target="_blank">LinkedIn ↗</a>
+    <a class="contact-chip" href="https://github.com/heenahooda/rainyscape-" target="_blank">GitHub ↗</a>
+  </div>
+</section>
+
+<footer>
+  <span>Heena Hooda · Front-End Developer · Gurugram, Haryana</span>
+  <span>heenahooda2@gmail.com</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
